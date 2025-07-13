@@ -13,7 +13,6 @@ import (
 	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/port"
 	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/handler/request"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/middleware"
 )
 
 type OrderHandler struct {
@@ -26,7 +25,7 @@ func NewOrderHandler(controller port.OrderController, jwtService port.JWTService
 }
 
 func (h *OrderHandler) Register(router *gin.RouterGroup) {
-	router.Use(middleware.JWTAuthMiddleware(h.jwtService))
+	//router.Use(middleware.JWTAuthMiddleware(h.jwtService))
 	router.GET("", h.List)
 	router.POST("", h.Create)
 	router.GET("/:id", h.Get)
@@ -275,12 +274,16 @@ func (h *OrderHandler) UpdatePartial(c *gin.Context) {
 		return
 	}
 
+	fmt.Println("URI ID:", uri.ID)
+
 	var body request.UpdateOrderPartilBodyRequest
 	if err := c.ShouldBindJSON(&body); err != nil {
 		fmt.Println(err)
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
+
+	fmt.Println("Body:", body)
 
 	input := dto.UpdateOrderInput{
 		ID:         uri.ID,

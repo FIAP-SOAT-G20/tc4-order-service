@@ -37,15 +37,15 @@ func (l *GormLogger) LogMode(gormlogger.LogLevel) gormlogger.Interface {
 }
 
 func (l *GormLogger) Info(ctx context.Context, msg string, data ...interface{}) {
-	l.Logger.InfoContext(ctx, msg, "data", data)
+	l.InfoContext(ctx, msg, "data", data)
 }
 
 func (l *GormLogger) Warn(ctx context.Context, msg string, data ...interface{}) {
-	l.Logger.WarnContext(ctx, msg, "data", data)
+	l.WarnContext(ctx, msg, "data", data)
 }
 
 func (l *GormLogger) Error(ctx context.Context, msg string, data ...interface{}) {
-	l.Logger.ErrorContext(ctx, msg, "data", data)
+	l.ErrorContext(ctx, msg, "data", data)
 }
 
 func (l *GormLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql string, rowsAffected int64), err error) {
@@ -53,7 +53,7 @@ func (l *GormLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql 
 	sql, rows := fc()
 
 	if err != nil {
-		l.Logger.ErrorContext(ctx, "database query failed",
+		l.ErrorContext(ctx, "database query failed",
 			"error", err,
 			"elapsed", elapsed,
 			"sql", sql,
@@ -62,7 +62,7 @@ func (l *GormLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql 
 		return
 	}
 
-	l.Logger.DebugContext(ctx, "database query",
+	l.DebugContext(ctx, "database query",
 		"elapsed", elapsed,
 		"sql", sql,
 		"rows", rows,

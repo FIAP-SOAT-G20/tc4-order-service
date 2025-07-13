@@ -1,0 +1,15 @@
+{
+  "total": 1,
+  "page": 1,
+  "limit": 10,
+  "customers": [
+      {
+          "id": 2,
+          "name": "John Doe 2",
+          "email": "john.doe.2@email.com",
+          "cpf": "987.654.321-00",
+          "created_at": "2025-02-28T16:28:18Z",
+          "updated_at": "2025-02-28T16:28:18Z"
+      }
+  ]
+}

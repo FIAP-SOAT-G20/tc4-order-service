@@ -53,7 +53,11 @@ func (h *HealthCheckHandler) HealthCheck(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
-	defer db.Close()
+	defer func() {
+		if closeErr := db.Close(); closeErr != nil {
+			_ = c.Error(closeErr)
+		}
+	}()
 
 	if db.Ping() != nil {
 		hc.Status = response.HealthCheckStatusFail

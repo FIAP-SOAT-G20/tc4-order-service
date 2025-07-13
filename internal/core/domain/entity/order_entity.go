@@ -10,8 +10,6 @@ type Order struct {
 	ID            uint64
 	CustomerID    uint64
 	Status        valueobject.OrderStatus
-	Payment       Payment
-	Customer      Customer
 	OrderProducts []OrderProduct
 	CreatedAt     time.Time
 	UpdatedAt     time.Time

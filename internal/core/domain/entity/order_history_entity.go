@@ -13,7 +13,6 @@ type OrderHistory struct {
 	Status    valueobject.OrderStatus
 	CreatedAt time.Time
 	Order     Order
-	Staff     *Staff
 }
 
 func NewOrderHistory(orderID uint64, status valueobject.OrderStatus, staffID *uint64) *OrderHistory {

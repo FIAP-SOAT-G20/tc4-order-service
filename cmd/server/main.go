@@ -77,14 +77,9 @@ func main() {
 func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg *config.Config) *route.Handlers {
 	// Datasources
 	productDS := datasource.NewProductDataSource(db.DB)
-	customerDS := datasource.NewCustomerDataSource(db.DB)
 	orderDS := datasource.NewOrderDataSource(db.DB)
 	orderProductDS := datasource.NewOrderProductDataSource(db.DB)
-	staffDS := datasource.NewStaffDataSource(db.DB)
 	orderHistoryDS := datasource.NewOrderHistoryDataSource(db.DB)
-	paymentDS := datasource.NewPaymentDataSource(db.DB)
-	// paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client) // Mercado Pago
-	paymentExternalDS := datasource.NewFakePaymentExternalDataSource(httpClient, cfg) // Fake Mercado Pago
 	categoryDS := datasource.NewCategoryDataSource(db.DB)
 
 	// Services
@@ -92,60 +87,41 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
-	customerGateway := gateway.NewCustomerGateway(customerDS)
 	orderHistoryGateway := gateway.NewOrderHistoryGateway(orderHistoryDS)
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
-	staffGateway := gateway.NewStaffGateway(staffDS)
-	paymentGateway := gateway.NewPaymentGateway(paymentDS, paymentExternalDS)
 	categoryGateway := gateway.NewCategoryGateway(categoryDS)
 
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)
-	customerUC := usecase.NewCustomerUseCase(customerGateway)
 	orderHistoryUC := usecase.NewOrderHistoryUseCase(orderHistoryGateway)
 	orderUC := usecase.NewOrderUseCase(orderGateway, orderHistoryUC)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
-	staffUC := usecase.NewStaffUseCase(staffGateway)
-	paymentUC := usecase.NewPaymentUseCase(paymentGateway, orderUC)
 	categoryUC := usecase.NewCategoryUseCase(categoryGateway)
-	authUC := usecase.NewAuthUseCase(customerUC, jwtService)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)
-	customerController := controller.NewCustomerController(customerUC)
 	orderController := controller.NewOrderController(orderUC)
 	orderProductController := controller.NewOrderProductController(orderProductUC)
-	staffController := controller.NewStaffController(staffUC)
 	orderHistoryController := controller.NewOrderHistoryController(orderHistoryUC)
-	paymentController := controller.NewPaymentController(paymentUC)
 	categoryController := controller.NewCategoryController(categoryUC)
-	authController := controller.NewAuthController(authUC)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
-	customerHandler := handler.NewCustomerHandler(customerController)
 	orderHandler := handler.NewOrderHandler(orderController, jwtService)
 	orderProductHandler := handler.NewOrderProductHandler(orderProductController)
-	staffHandler := handler.NewStaffHandler(staffController)
 	healthCheckHandler := handler.NewHealthCheckHandler()
 	orderHistoryHandler := handler.NewOrderHistoryHandler(orderHistoryController, jwtService)
-	paymentHandler := handler.NewPaymentHandler(paymentController, jwtService)
 	categoryHandler := handler.NewCategoryHandler(categoryController)
-	authHandler := handler.NewAuthHandler(authController)
 	redocHandler := handler.NewRedocHandler()
 
 	handlers := &route.Handlers{
 		Product:      productHandler,
-		Customer:     customerHandler,
-		Staff:        staffHandler,
 		Order:        orderHandler,
 		OrderProduct: orderProductHandler,
 		OrderHistory: orderHistoryHandler,
 		HealthCheck:  healthCheckHandler,
-		Payment:      paymentHandler,
 		Category:     categoryHandler,
-		Auth:         authHandler,
 		Redoc:        redocHandler,
 	}
 

@@ -40,7 +40,7 @@ services:
 
   dbadmin:
     image: dpage/pgadmin4
-    container_name: dbadmin.10soat-g22.dev
+    container_name: db-order-admin.10soat-g22.dev
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=admin

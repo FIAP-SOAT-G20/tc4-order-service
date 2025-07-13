@@ -12,7 +12,7 @@ services:
       - ..:/workspace:cached
       - go-cache:/go
     environment:
-      - DB_DSN=postgres://postgres:postgres@postgres:5432/fastfood_10soat_g22_tc3?sslmode=disable
+      - DB_DSN=postgres://postgres:postgres@postgres:5432/ff_db_order?sslmode=disable
     command: sleep infinity
     network_mode: service:postgres
 
@@ -24,7 +24,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: fastfood_10soat_g22_tc3
+      POSTGRES_DB: ff_db_order
 
 volumes:
   postgres-data:

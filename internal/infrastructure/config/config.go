@@ -66,7 +66,7 @@ func LoadConfig() *Config {
 
 	return &Config{
 		// Database settings
-		DBDSN:          getEnv("DB_DSN", "host=localhost port=5432 user=postgres password=postgres dbname=fastfood_10soat_g22_tc3 sslmode=disable"),
+		DBDSN:          getEnv("DB_DSN", "host=localhost port=5432 user=postgres password=postgres dbname=ff_db_order sslmode=disable"),
 		DBMaxOpenConns: dbMaxOpenConns,
 		DBMaxIdleConns: dbMaxIdleConns,
 		DBMaxLifetime:  dbMaxLifetime,

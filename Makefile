@@ -71,7 +71,7 @@ run-air: build ## Run the application with Air
 	@go tool air -c air.toml
 
 .PHONY: test
-test: ## Run tests
+test: lint ## Run tests
 	@echo  "🟢 Running tests..."
 	@$(GOFMT) ./...
 	@$(GOVET) ./...
@@ -116,7 +116,7 @@ swagger: ## Generate Swagger documentation
 .PHONY: lint
 lint: ## Run linter
 	@echo  "🟢 Running linter..."
-	@go run github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8 run --out-format colored-line-number
+	@go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.2.2 run
 
 .PHONY: migrate-create
 migrate-create: ## Create new migration, usage example: make migrate-create name=create_table_products

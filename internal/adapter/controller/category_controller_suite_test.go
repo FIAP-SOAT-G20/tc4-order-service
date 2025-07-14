@@ -5,11 +5,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/adapter/controller"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/adapter/presenter"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/port"
-	mockport "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/adapter/controller"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/adapter/presenter"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/port"
+	mockport "github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/port/mocks"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/mock/gomock"
 )

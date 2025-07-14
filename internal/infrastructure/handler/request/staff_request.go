@@ -1,6 +1,6 @@
 package request
 
-import valueobject "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain/value_object"
+import valueobject "github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain/value_object"
 
 type ListStaffsQueryRequest struct {
 	Name  string                `form:"name" example:"John Doe"`

@@ -4,7 +4,7 @@
 APP_NAME=app
 MAIN_FILE=cmd/server/main.go
 DOCKER_REGISTRY=ghcr.io
-DOCKER_REGISTRY_APP=fiap-soat-g20/fiap-tech-challenge-3-api
+DOCKER_REGISTRY_APP=fiap-soat-g20/tc4-order-service
 DOCKER_REGISTRY_MOCK_SERVER_APP=fiap-soat-g20/mock-server
 VERSION=$(shell git describe --tags --always --dirty)
 NAMESPACE=tech-challenge-ns

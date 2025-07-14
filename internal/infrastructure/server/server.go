@@ -9,10 +9,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/config"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/handler"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/logger"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/route"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/logger"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/route"
 	"github.com/gin-gonic/gin/binding"
 
 	"github.com/go-playground/validator/v10"

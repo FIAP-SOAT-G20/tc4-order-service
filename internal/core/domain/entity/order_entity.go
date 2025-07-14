@@ -3,7 +3,7 @@ package entity
 import (
 	"time"
 
-	valueobject "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain/value_object"
+	valueobject "github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain/value_object"
 )
 
 type Order struct {

@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # image: ghcr.io/fiap-soat-g20/fiap-tech-challenge-3-api:latest
+    # image: ghcr.io/fiap-soat-g20/tc4-order-service:latest
     container_name: app.10soat-g22.dev
     ports:
       - "8080:8080"

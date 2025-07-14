@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/logger"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/logger"
 )
 
 type ErrorJsonResponse struct {

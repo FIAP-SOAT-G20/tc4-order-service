@@ -154,8 +154,8 @@ func processedMessage(ctx context.Context, message types.Message, logger *logger
 
 	// Update the order status in the database
 	uoi := dto.UpdateOrderInput{
-		ID:      updatedOrderStatus.OrderID,
-		Status:  updatedOrderStatus.Status,
+		ID:     updatedOrderStatus.OrderID,
+		Status: updatedOrderStatus.Status,
 	}
 	if updatedOrderStatus.StaffID != nil {
 		uoi.StaffID = *updatedOrderStatus.StaffID

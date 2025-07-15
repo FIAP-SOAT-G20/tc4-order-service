@@ -53,7 +53,7 @@ run: build run-db ## Run the application
 
 
 .PHONY: run-worker
-run: build run-db ## Run the application
+run-worker: build run-db ## Run the application
 	@echo  "🟢 Running the application..."
 	$(GORUN) $(WORKER_FILE) || true
 

@@ -11,7 +11,6 @@ import (
 	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/database"
 	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/datasource"
 	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/handler"
-	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/httpclient"
 	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/route"
 	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/server"
@@ -63,9 +62,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	httpClient := httpclient.NewRestyClient(cfg, loggerInstance)
-
-	handlers := setupHandlers(db, httpClient, cfg)
+	handlers := setupHandlers(db, cfg)
 
 	srv := server.NewServer(cfg, loggerInstance, handlers)
 	if err := srv.Start(); err != nil {
@@ -74,7 +71,7 @@ func main() {
 	}
 }
 
-func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg *config.Config) *route.Handlers {
+func setupHandlers(db *database.Database, cfg *config.Config) *route.Handlers {
 	// Datasources
 	productDS := datasource.NewProductDataSource(db.DB)
 	orderDS := datasource.NewOrderDataSource(db.DB)

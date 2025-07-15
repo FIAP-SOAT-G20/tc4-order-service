@@ -43,7 +43,6 @@ func LoadConfig() *Config {
 		log.Printf("Warning: .env file not found or error loading it: %v", err)
 	}
 
-
 	dbMaxOpenConns, _ := strconv.Atoi(getEnv("DB_MAX_OPEN_CONNS", "25"))
 	dbMaxIdleConns, _ := strconv.Atoi(getEnv("DB_MAX_IDLE_CONNS", "25"))
 	dbMaxLifetime, _ := time.ParseDuration(getEnv("DB_CONN_MAX_LIFETIME", "5m"))

@@ -113,11 +113,10 @@ func processJob(
 	err := processedMessage(ctx, message, logger, uc)
 	if err != nil {
 		logger.Error("failed to process message", "error", err.Error(), "messageID", *message.MessageId)
-		// send the message to a dead-letter queue for further investigation
+		// TODO: send the message to a dead-letter queue for further investigation
 	}
 
 	_, err = sqsClient.DeleteMessage(context.TODO(), deleteParams)
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -136,18 +135,17 @@ func processedMessage(ctx context.Context, message types.Message, logger *logger
 	}
 
 	if updatedOrderStatus.OrderID == 0 {
-		logger.Error(domain.ErrOrderIsMandatory, "messageID", *message.MessageId)
 		return domain.NewValidationError(errors.New(domain.ErrOrderIsMandatory))
 	}
 
 	if updatedOrderStatus.Status == "" {
-		logger.Error(domain.ErrStatusIsMandatory, "messageID", *message.MessageId)
 		return domain.NewValidationError(errors.New(domain.ErrStatusIsMandatory))
 	}
 
 	// Get Order by ID
 	_, err = uc.Get(ctx, dto.GetOrderInput{ID: updatedOrderStatus.OrderID})
 	if err != nil {
+		// TODO: Reprocess the message
 		return err
 	}
 

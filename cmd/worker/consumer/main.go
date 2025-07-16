@@ -90,9 +90,8 @@ func main() {
 			wg.Add(1)
 
 			go processJob(ctx, message, sqsClient, appCfg.AWS_SQSURL, loggerInstance, orderUC)
-
-			wg.Wait()
 		}
+		wg.Wait()
 	}
 }
 

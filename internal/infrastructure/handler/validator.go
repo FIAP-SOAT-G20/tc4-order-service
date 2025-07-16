@@ -9,8 +9,3 @@ func OrderStatusValidator(fl validator.FieldLevel) bool {
 	status := fl.Field().String()
 	return valueobject.IsValidOrderStatus(status)
 }
-
-func StaffRoleValidator(fl validator.FieldLevel) bool {
-	role := fl.Field().String()
-	return valueobject.IsValidStaffRole(role)
-}

@@ -88,10 +88,5 @@ func RegisterCustomValidation() {
 		if err != nil {
 			panic(err)
 		}
-
-		err = v.RegisterValidation("staff_role_exists", handler.StaffRoleValidator)
-		if err != nil {
-			panic(err)
-		}
 	}
 }

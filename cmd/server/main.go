@@ -3,19 +3,18 @@ package main
 import (
 	"os"
 
-	_ "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/docs"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/adapter/controller"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/adapter/gateway"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/usecase"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/config"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/database"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/datasource"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/handler"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/httpclient"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/logger"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/route"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/server"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/service"
+	_ "github.com/FIAP-SOAT-G20/tc4-order-service/docs"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/adapter/controller"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/adapter/gateway"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/usecase"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/database"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/datasource"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/logger"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/route"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/server"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/service"
 )
 
 // @title						Fast Food API v3
@@ -41,7 +40,7 @@ import (
 // @tag.description			Health check
 //
 // @externalDocs.description	GitHub Repository
-// @externalDocs.url			https://github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api
+// @externalDocs.url			https://github.com/FIAP-SOAT-G20/tc4-order-service
 //
 // @securityDefinitions.apikey	BearerAuth
 // @in							header
@@ -63,9 +62,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	httpClient := httpclient.NewRestyClient(cfg, loggerInstance)
-
-	handlers := setupHandlers(db, httpClient, cfg)
+	handlers := setupHandlers(db, cfg)
 
 	srv := server.NewServer(cfg, loggerInstance, handlers)
 	if err := srv.Start(); err != nil {
@@ -74,7 +71,7 @@ func main() {
 	}
 }
 
-func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg *config.Config) *route.Handlers {
+func setupHandlers(db *database.Database, cfg *config.Config) *route.Handlers {
 	// Datasources
 	productDS := datasource.NewProductDataSource(db.DB)
 	orderDS := datasource.NewOrderDataSource(db.DB)

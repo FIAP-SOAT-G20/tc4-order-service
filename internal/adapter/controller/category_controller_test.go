@@ -3,9 +3,9 @@ package controller_test
 import (
 	"testing"
 
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/dto"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/util"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/dto"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/util"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -10,6 +10,13 @@ import (
 )
 
 type Config struct {
+	// AWS SQS settings
+	AWS_SQSKey    string
+	AWS_SQSSecret string
+	AWS_SQSURL    string
+	AWS_SQSRegion string
+	AWS_SQSToken  string
+
 	// Database settings
 	DBDSN          string
 	DBMaxOpenConns int
@@ -25,15 +32,6 @@ type Config struct {
 
 	// Environment
 	Environment string
-
-	// Mercado Pago
-	FakeMercadoPagoURL             string
-	FakeMercadoPagoNotificationURL string
-	MercadoPagoToken               string
-	MercadoPagoURL                 string
-	MercadoPagoTimeout             time.Duration
-	MercadoPagoRetryCount          int
-	MercadoPagoNotificationURL     string
 
 	// JWT Settings
 	JWTSecret     string
@@ -54,9 +52,6 @@ func LoadConfig() *Config {
 	serverIdleTimeout, _ := time.ParseDuration(getEnv("SERVER_IDLE_TIMEOUT", "60s"))
 	serverGracefulShutdownTimeout, _ := time.ParseDuration(getEnv("SERVER_GRACEFUL_SHUTDOWN_SEC_TIMEOUT", "5s"))
 
-	mercadoPagoTimeout, _ := time.ParseDuration(getEnv("MERCADO_PAGO_TIMEOUT", "10s"))
-	mercadoPagoRetryCount, _ := strconv.Atoi(getEnv("MERCADO_PAGO_RETRY_COUNT", "2"))
-
 	jwtExpirationStr := getEnv("JWT_EXPIRATION", "24h")
 	jwtExpiration, err := time.ParseDuration(jwtExpirationStr)
 	if err != nil {
@@ -65,6 +60,13 @@ func LoadConfig() *Config {
 	}
 
 	return &Config{
+		// AWS SQS settings
+		AWS_SQSKey:    getEnv("AWS_SQS_KEY", ""),
+		AWS_SQSSecret: getEnv("AWS_SQS_SECRET", ""),
+		AWS_SQSURL:    getEnv("AWS_SQS_URL", ""),
+		AWS_SQSRegion: getEnv("AWS_SQS_REGION", "us-east-1"),
+		AWS_SQSToken:  getEnv("AWS_SQS_TOKEN", ""),
+
 		// Database settings
 		DBDSN:          getEnv("DB_DSN", "host=localhost port=5432 user=postgres password=postgres dbname=ff_db_order sslmode=disable"),
 		DBMaxOpenConns: dbMaxOpenConns,
@@ -80,15 +82,6 @@ func LoadConfig() *Config {
 
 		// Environment
 		Environment: getEnv("ENVIRONMENT", "development"),
-
-		// Mercado Pago
-		FakeMercadoPagoURL:             getEnv("FAKE_MERCADO_PAGO_URL", "url"),
-		FakeMercadoPagoNotificationURL: getEnv("FAKE_MERCADO_PAGO_NOTIFICATION_URL", "url"),
-		MercadoPagoToken:               getEnv("MERCADO_PAGO_TOKEN", "token"),
-		MercadoPagoURL:                 getEnv("MERCADO_PAGO_URL", "url"),
-		MercadoPagoTimeout:             mercadoPagoTimeout,
-		MercadoPagoRetryCount:          mercadoPagoRetryCount,
-		MercadoPagoNotificationURL:     getEnv("MERCADO_PAGO_NOTIFICATION_URL", "url"),
 
 		// JWT Settings
 		JWTSecret:     getEnv("JWT_SECRET", "SUPER_SECRET_KEY_DONT_TELL_ANYONE"),

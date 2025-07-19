@@ -5,12 +5,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/adapter/presenter"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain"
-	valueobject "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain/value_object"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/dto"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/port"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/handler/request"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/adapter/presenter"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain"
+	valueobject "github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain/value_object"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/dto"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/port"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/handler/request"
 )
 
 type OrderHistoryHandler struct {

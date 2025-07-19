@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # image: ghcr.io/fiap-soat-g20/fiap-tech-challenge-3-api:latest
+    # image: ghcr.io/fiap-soat-g20/tc4-order-service:latest
     container_name: app.10soat-g22.dev
     ports:
       - "8080:8080"
@@ -11,6 +11,28 @@ services:
       - .env
     environment:
       - DB_DSN=postgres://postgres:postgres@db:5432/ff_db_order?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - ff_order_network
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    # image: ghcr.io/fiap-soat-g20/tc4-order-service:latest
+    container_name: worker.10soat-g22.dev
+    env_file:
+      - .env
+    environment:
+      - DB_DSN=postgres://postgres:postgres@db:5432/ff_db
+      - AWS_SQS_KEY=${AWS_SQS_KEY}
+      - AWS_SQS_SECRET=${AWS_SQS_SECRET}
+      - AWS_SQS_URL=${AWS_SQS_URL}
+      - AWS_SQS_REGION=${AWS_SQS_REGION}
+      - AWS_SQS_TOKEN=${AWS_SQS_TOKEN}
     depends_on:
       db:
         condition: service_healthy

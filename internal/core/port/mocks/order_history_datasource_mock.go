@@ -13,7 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	entity "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain/entity"
+	entity "github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain/entity"
 	gomock "go.uber.org/mock/gomock"
 )
 

@@ -13,8 +13,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	dto "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/dto"
-	port "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/port"
+	dto "github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/dto"
+	port "github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/port"
 	gomock "go.uber.org/mock/gomock"
 )
 

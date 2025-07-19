@@ -1,6 +1,6 @@
 package dto
 
-import valueobject "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain/value_object"
+import valueobject "github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain/value_object"
 
 type CreateFirstOrderHistoryInput struct {
 	OrderID uint64

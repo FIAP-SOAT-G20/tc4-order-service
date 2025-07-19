@@ -3,10 +3,10 @@ package handler_test
 import (
 	"maps"
 
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/logger"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/middleware"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/infrastructure/server"
-	"github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/util"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/logger"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/middleware"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/infrastructure/server"
+	"github.com/FIAP-SOAT-G20/tc4-order-service/internal/util"
 	"github.com/gin-gonic/gin"
 )
 

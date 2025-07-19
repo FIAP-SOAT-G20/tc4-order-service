@@ -3,8 +3,9 @@
 # Variables
 APP_NAME=app
 MAIN_FILE=cmd/server/main.go
+WORKER_FILE=cmd/worker/consumer/main.go
 DOCKER_REGISTRY=ghcr.io
-DOCKER_REGISTRY_APP=fiap-soat-g20/fiap-tech-challenge-3-api
+DOCKER_REGISTRY_APP=fiap-soat-g20/tc4-order-service
 DOCKER_REGISTRY_MOCK_SERVER_APP=fiap-soat-g20/mock-server
 VERSION=$(shell git describe --tags --always --dirty)
 NAMESPACE=tech-challenge-ns
@@ -49,6 +50,12 @@ run-db: ## Run the database
 run: build run-db ## Run the application
 	@echo  "🟢 Running the application..."
 	$(GORUN) $(MAIN_FILE) || true
+
+
+.PHONY: run-worker
+run-worker: build run-db ## Run the application
+	@echo  "🟢 Running the application..."
+	$(GORUN) $(WORKER_FILE) || true
 
 .PHONY: stop
 stop: ## Stop the application

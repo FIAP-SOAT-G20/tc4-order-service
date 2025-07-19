@@ -1,4 +1,4 @@
-## 10SOAT G20 Tech Challenge 1 - Agreements :handshake:
+## 10SOAT Tech Challenge - Agreements :handshake:
 
 - Code with Go
 - Use Conventional Commits

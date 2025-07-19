@@ -1,6 +1,6 @@
 package request
 
-import valueobject "github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/internal/core/domain/value_object"
+import valueobject "github.com/FIAP-SOAT-G20/tc4-order-service/internal/core/domain/value_object"
 
 type ListOrderHistoriesQueryRequest struct {
 	OrderID uint64                  `form:"order_id,default=0" example:"1"`

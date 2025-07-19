@@ -1,4 +1,4 @@
-name: cd/push-api-to-registry
+name: cd/push-worker-to-registry
 
 on:
   release:

@@ -11,11 +11,11 @@ import (
 
 type Config struct {
 	// AWS SQS settings
-	AWS_SQSKey    string
-	AWS_SQSSecret string
-	AWS_SQSURL    string
-	AWS_SQSRegion string
-	AWS_SQSToken  string
+	AWS_Key    string
+	AWS_Secret string
+	AWS_Region string
+	AWS_Token  string
+	// AWS_SQSURL string
 
 	// Database settings
 	DBDSN          string
@@ -61,14 +61,14 @@ func LoadConfig() *Config {
 
 	return &Config{
 		// AWS SQS settings
-		AWS_SQSKey:    getEnv("AWS_SQS_KEY", ""),
-		AWS_SQSSecret: getEnv("AWS_SQS_SECRET", ""),
-		AWS_SQSURL:    getEnv("AWS_SQS_URL", ""),
-		AWS_SQSRegion: getEnv("AWS_SQS_REGION", "us-east-1"),
-		AWS_SQSToken:  getEnv("AWS_SQS_TOKEN", ""),
+		AWS_Key:    getEnv("AWS_ACCESS_KEY_ID", ""),
+		AWS_Secret: getEnv("AWS_SECRET_ACCESS_KEY", ""),
+		AWS_Region: getEnv("AWS_REGION", "us-east-1"),
+		AWS_Token:  getEnv("AWS_SESSION_TOKEN", ""),
+		// AWS_SQSURL: getEnv("AWS_SQS_ORDER_STATUS_UPDATED_URL", ""),
 
 		// Database settings
-		DBDSN:          getEnv("DB_DSN", "host=localhost port=5432 user=postgres password=postgres dbname=ff_db_order sslmode=disable"),
+		DBDSN:          getEnv("DB_DSN", "host=localhost port=5432 user=postgres password=postgres dbname=fastfood_10soat_g19_tc4_order sslmode=disable"),
 		DBMaxOpenConns: dbMaxOpenConns,
 		DBMaxIdleConns: dbMaxIdleConns,
 		DBMaxLifetime:  dbMaxLifetime,

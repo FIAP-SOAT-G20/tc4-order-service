@@ -56,43 +56,61 @@ func main() {
 	// credentials, and shared configuration files
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
 		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
-			appCfg.AWS_SQSKey,
-			appCfg.AWS_SQSSecret,
-			appCfg.AWS_SQSToken)),
-		config.WithRegion(appCfg.AWS_SQSRegion),
+			appCfg.AWS_Key,
+			appCfg.AWS_Secret,
+			appCfg.AWS_Token)),
+		config.WithRegion(appCfg.AWS_Region),
 	)
 
 	if err != nil {
-		log.Fatal(err)
+		loggerInstance.Error("failed to load AWS config", "error", err.Error())
+		os.Exit(1)
 	}
 
 	// Using the Config value, create the SQS client
 	sqsClient := sqs.NewFromConfig(cfg)
 
-	loggerInstance.Info("SQS client created", "region", appCfg.AWS_SQSRegion, "url", appCfg.AWS_SQSURL)
+	awsSQSURL, err := getQueueURL(sqsClient, "order-status-updated")
+	if err != nil {
+		loggerInstance.Error("failed to get SQS queue URL", "error", err.Error())
+		os.Exit(1)
+	}
+
+	loggerInstance.Info("SQS client created", "region", appCfg.AWS_Region, "url", awsSQSURL)
 
 	// Receive messages from SQS
 	for {
 		results, err := sqsClient.ReceiveMessage(
 			context.Background(),
 			&sqs.ReceiveMessageInput{
-				QueueUrl:            &appCfg.AWS_SQSURL,
+				QueueUrl:            &awsSQSURL,
 				MaxNumberOfMessages: 10,
 			},
 		)
 
 		if err != nil {
-			log.Fatal(err)
+			loggerInstance.Error("failed to receive messages from SQS", "error", err.Error())
+			continue
 		}
 
 		for _, message := range results.Messages {
 
 			wg.Add(1)
 
-			go processJob(ctx, message, sqsClient, appCfg.AWS_SQSURL, loggerInstance, orderUC)
+			go processJob(ctx, message, sqsClient, awsSQSURL, loggerInstance, orderUC)
 		}
 		wg.Wait()
 	}
+}
+
+func getQueueURL(sqsClient *sqs.Client, queueName string) (string, error) {
+	result, err := sqsClient.GetQueueUrl(context.Background(), &sqs.GetQueueUrlInput{
+		QueueName: &queueName,
+	})
+	if err != nil {
+		return "", err
+	}
+	return *result.QueueUrl, nil
 }
 
 func processJob(

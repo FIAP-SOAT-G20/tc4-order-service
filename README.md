@@ -30,8 +30,8 @@ Tech Challenge 4 specifications can be found [here](docs/tc4-spec.pdf).
 
 > [!NOTE]
 > Tech Challenge 1 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1)  
-> Tech Challenge 2 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2)
-> Tech Challenge 3 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase3)
+> Tech Challenge 2 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2)  
+> Tech Challenge 3 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase3)  
 
 ## 🔗 Related Projects
 
@@ -59,19 +59,7 @@ This project is part of a larger system that includes:
 
 ### Flow Diagram
 
-![Flow Diagram](docs/tc2-flow-diagram.png)
-
-### L1 - C4 Model - System Context
-
-![System Context](docs/tc2-c4-system-context.jpeg)
-
-### L2 - C4 Model - Container Diagram
-
-![Container Diagram](docs/tc2-c4-container.jpeg)
-
-### L3 - C4 Model - Component Diagram
-
-![Component Diagram](docs/tc2-c4-component.jpeg)
+![Flow Diagram](docs/flow-diagram.png)
 
 ### :open_file_folder: Project Structure
 
@@ -278,6 +266,7 @@ make compose-up
 > [!NOTE]
 > The application will be available at <http://localhost:8080>
 > Ex: <http://localhost:8080/api/v1/health>
+> The worker will be ready to consume messages from the SQS queue, dont forget ro set AWS Credentials in the `~/.aws/credentials` file
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -304,7 +293,7 @@ make compose-up
 18. Generate a new `release` tag ([here](https://github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/releases/new)) with [semantic versioning](https://semver.org/)
 
 > [!TIP]
-> 7: `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
+> 7: `make run-api` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
 > Alternatively, you can run `make run-air` to run the application using Air (live reload)
 
 > [!TIP]
@@ -347,7 +336,7 @@ make test
     <tbody>
       <tr>
         <td align="center" valign="top" width="14.28%"><a href="https://github.com/atomaz"><img src="https://github.com/atomaz.png" width="100px;" alt=""/><br /><sub><b>Alice Tomaz</b></sub></a><br />
-        <td align="center" valign="top" width="14.28%"><a href="https://github.com/filipe1309"><img src="https://github.com/filipe1309.png" width="100px;" alt=""/><br /><sub><b>Filipe Leuch Bonfim</b></sub></a><br />
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/filipe1309"><img src="https://github.com/filipe1309.png" width="100px;" alt=""/><br /><sub><b>Filipe Bonfim</b></sub></a><br />
         <td align="center" valign="top" width="14.28%"><a href="https://github.com/hugokishi"><img src="https://github.com/hugokishi.png" width="100px;" alt=""/><br /><sub><b>Hugo Kishi</b></sub></a><br />
         <td align="center" valign="top" width="14.28%"><a href="https://github.com/marcos-nsantos"><img src="https://github.com/marcos-nsantos.png" width="100px;" alt=""/><br /><sub><b>Marcos Santos</b></sub></a><br />
         <td align="center" valign="top" width="14.28%"><a href="https://github.com/th3r4ven"><img src="https://github.com/th3r4ven.png" width="100px;" alt=""/><br /><sub><b>Matheus</b></sub></a><br />

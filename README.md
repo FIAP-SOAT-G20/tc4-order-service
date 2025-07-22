@@ -294,7 +294,7 @@ make compose-up
 
 > [!TIP]
 > 7: `make run-api` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
-> Alternatively, you can run `make run-air` to run the application using Air (live reload)
+> Alternatively, you can run `make run-api-air` to run the application using Air (live reload)
 
 > [!TIP]
 > 18: When a new `release` tag is created, the GitHub Actions will build and push the image to the  

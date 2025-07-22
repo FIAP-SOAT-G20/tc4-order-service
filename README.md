@@ -330,6 +330,14 @@ make test
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## :clap: Acknowledgments
+
+- [Elegant use of GoLang channels with AWS SQS](https://marcioghiraldelli.medium.com/elegant-use-of-golang-channels-with-aws-sqs-dad20cd59f34)
+- [Asynchronous tasks management made simple: AWS SQS with AWS Lambda](https://medium.com/canopas/asynchronous-tasks-management-made-simple-aws-sqs-with-aws-lambda-32959071c82d)
+- [AWS SDK Code Examples](https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/gov2/sqs/hello/hello.go)
+- [Process AWS SQS Message With Goroutines](https://medium.com/@wiraizkandar/process-aws-sqs-message-with-goroutines-98ff4799ea69)
+- [Amazon SQS examples using SDK for Go V2](https://docs.aws.amazon.com/code-library/latest/ug/go_2_sqs_code_examples.html)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## :busts_in_silhouette: Contributors

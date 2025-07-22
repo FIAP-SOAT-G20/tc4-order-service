@@ -11,11 +11,9 @@ import (
 
 type Config struct {
 	// AWS SQS settings
-	AWS_Key    string
-	AWS_Secret string
-	AWS_Region string
-	AWS_Token  string
-	// AWS_SQSURL string
+	AWS_SQS_OrderStatusUpdatedURL             string
+	AWS_SQS_OrderStatusUpdatedMaxMessages     int
+	AWS_SQS_OrderStatusUpdatedWaitTimeSeconds int
 
 	// Database settings
 	DBDSN          string
@@ -43,6 +41,9 @@ func LoadConfig() *Config {
 		log.Printf("Warning: .env file not found or error loading it: %v", err)
 	}
 
+	AWS_SQS_OrderStatusUpdatedMaxMessages, _ := strconv.Atoi(getEnv("AWS_SQS_ORDER_STATUS_UPDATED_MAX_MESSAGES", "10"))
+	AWS_SQS_OrderStatusUpdatedWaitTimeSeconds, _ := strconv.Atoi(getEnv("AWS_SQS_ORDER_STATUS_UPDATED_WAIT_TIME_SECONDS", "20"))
+
 	dbMaxOpenConns, _ := strconv.Atoi(getEnv("DB_MAX_OPEN_CONNS", "25"))
 	dbMaxIdleConns, _ := strconv.Atoi(getEnv("DB_MAX_IDLE_CONNS", "25"))
 	dbMaxLifetime, _ := time.ParseDuration(getEnv("DB_CONN_MAX_LIFETIME", "5m"))
@@ -61,11 +62,9 @@ func LoadConfig() *Config {
 
 	return &Config{
 		// AWS SQS settings
-		AWS_Key:    getEnv("AWS_ACCESS_KEY_ID", ""),
-		AWS_Secret: getEnv("AWS_SECRET_ACCESS_KEY", ""),
-		AWS_Region: getEnv("AWS_REGION", "us-east-1"),
-		AWS_Token:  getEnv("AWS_SESSION_TOKEN", ""),
-		// AWS_SQSURL: getEnv("AWS_SQS_ORDER_STATUS_UPDATED_URL", ""),
+		AWS_SQS_OrderStatusUpdatedURL:             getEnv("AWS_SQS_ORDER_STATUS_UPDATED_URL", ""),
+		AWS_SQS_OrderStatusUpdatedMaxMessages:     AWS_SQS_OrderStatusUpdatedMaxMessages,
+		AWS_SQS_OrderStatusUpdatedWaitTimeSeconds: AWS_SQS_OrderStatusUpdatedWaitTimeSeconds,
 
 		// Database settings
 		DBDSN:          getEnv("DB_DSN", "host=localhost port=5432 user=postgres password=postgres dbname=fastfood_10soat_g19_tc4_order sslmode=disable"),

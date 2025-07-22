@@ -67,8 +67,8 @@ stop-db: ## Stop the database
 	@echo  "🔴 Stopping the database..."
 	docker-compose down db dbadmin
 
-.PHONY: run-air
-run-air: build ## Run the application with Air
+.PHONY: run-api-air
+run-api-air: build ## Run the application with Air
 	@echo  "🟢 Running the application with Air..."
 	@go tool air -c air.toml
 

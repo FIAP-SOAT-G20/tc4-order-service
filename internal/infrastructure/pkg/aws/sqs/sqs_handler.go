@@ -70,7 +70,7 @@ func (h *SqsHandler) ReceiveMessages(ctx context.Context, processor func(types.M
 			}
 
 			h.logger.Info("Sending message to dead-letter queue", "messageId", *message.MessageId)
-			// TODO: implement dead-letter queue logic
+			// TODO: send the message to a dead-letter queue for further investigation
 		}
 
 		if err := h.DeleteMessage(ctx, h.queueURL, *message.ReceiptHandle); err != nil {

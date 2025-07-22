@@ -31,7 +31,7 @@ func main() {
 
 	db, err := database.NewPostgresConnection(appCfg, loggerInstance)
 	if err != nil {
-		loggerInstance.Error("failed to connect to database", "error", err.Error())
+		loggerInstance.Error("Failed to connect to database", "error", err.Error())
 		os.Exit(1)
 	}
 
@@ -71,7 +71,6 @@ func main() {
 			reprocess, err := processedMessage(ctx, message, loggerInstance, orderUC)
 			if err != nil {
 				loggerInstance.Error("Failed to process message", "error", err.Error(), "messageID", *message.MessageId)
-				// TODO: send the message to a dead-letter queue for further investigation
 				return reprocess, err
 			}
 
@@ -103,7 +102,7 @@ func processedMessage(ctx context.Context, message types.Message, logger *logger
 		return false, domain.NewValidationError(errors.New(domain.ErrStatusIsMandatory))
 	}
 
-	// Get Order by ID, err *domain.InternalError
+	// Get Order by ID
 	_, err = uc.Get(ctx, dto.GetOrderInput{ID: updatedOrderStatus.OrderID})
 	if err != nil {
 		if err.Error() == domain.ErrInternalError {

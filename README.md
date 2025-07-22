@@ -1,5 +1,3 @@
-# Fast Food FIAP Tech Challenge 4 - Order Service
-
 <a name="readme-top"></a>
 
 ![GitHub CI - Tests](https://github.com/FIAP-SOAT-G20/fiap-tech-challenge-3-api/actions/workflows/test.yml/badge.svg)

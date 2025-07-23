@@ -1,4 +1,4 @@
-name: ci/go-test-coverage
+name: ci/coverage
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  build:
+  go-test-coverage:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -64,6 +64,7 @@ jobs:
             ```
             ${{ fromJSON(steps.coverage.outputs.report) }}```
             ```
+            
 
       - name: "finally check coverage"
         if: steps.coverage.outcome == 'failure'

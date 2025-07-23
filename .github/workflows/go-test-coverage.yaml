@@ -43,7 +43,8 @@ jobs:
           message: |
             go-test-coverage report:
             ```
-            ${{ fromJSON(steps.coverage.outputs.report) }}```
+            ${{ steps.coverage.outputs.report }}
+            ```
 
       - name: "finally check coverage"
         if: steps.coverage.outcome == 'failure'

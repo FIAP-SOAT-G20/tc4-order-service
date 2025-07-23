@@ -19,8 +19,8 @@ on:
       - 'main'
 
 jobs:
-  unit_tests:
-    name: "Unit tests"
+  coverage_file:
+    name: "coverage-file"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -37,11 +37,6 @@ jobs:
       - name: Test
         run: go test -cover -coverprofile=coverage.txt ./...
 
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v4
-        with:
-          name: code-coverage
-          path: coverage.txt # Make sure to use the same file name you chose for the "-coverprofile" in the "Test" step
       - name: Remove files that are not meant to be tested
         run: |
           cp coverage.txt coverage.txt.tmp
@@ -51,11 +46,17 @@ jobs:
           | grep -v "server" | grep -v "logger" | grep -v "httpclient" | grep -v "_entity.go" | grep -v "errors.go" | grep -v "_dto.go" > coverage.txt
           rm coverage.txt.tmp
 
-  code_coverage:
-    name: "Code coverage report"
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage
+          path: coverage.txt # Make sure to use the same file name you chose for the "-coverprofile" in the "Test" step
+
+  go-coverage-report:
+    name: "go-coverage-report"
     if: github.event_name == 'pull_request' # Do not run when workflow is triggered by push to main branch
     runs-on: ubuntu-latest
-    needs: unit_tests # Depends on the artifact uploaded by the "unit_tests" job
+    needs: coverage_file # Depends on the artifact uploaded by the "coverage_file" job
     permissions:
       contents:      read
       actions:       read  # to download code coverage results from "test" job

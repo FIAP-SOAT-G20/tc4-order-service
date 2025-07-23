@@ -24,6 +24,9 @@
 
 Repository for the [FIAP](https://postech.fiap.com.br/) Tech Challenge 4, focused on developing a microservice backend system for managing orders in a fast-food restaurant.
 
+This service is composed of an `API` and a `Worker` that consumes messages from an AWS SQS queue.  
+The API is responsible for handling HTTP requests, while the worker processes messages from the queue, such as order creation and updates.
+
 Tech Challenge 4 specifications can be found [here](docs/tc4-spec.pdf).
 
 > [!NOTE]

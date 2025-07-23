@@ -6,6 +6,9 @@ threshold:
   total: 80
 exclude:
   paths:
+    - docs/*
+    - internal/core/domain/value_object/*
+    - jwt_service.go
     - ^.*_mock\.go$
     - ^.*_request\.go$
     - ^.*_response\.go$

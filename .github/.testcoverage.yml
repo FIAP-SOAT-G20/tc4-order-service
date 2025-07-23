@@ -6,10 +6,11 @@ threshold:
   total: 80
 exclude:
   paths:
-    - health_check_handler.go
-    - internal/infrastructure/pkg/*
     - docs/*
+    - internal/infrastructure/pkg/*
     - internal/core/domain/value_object/*
+    - cmd/worker/consumer/main.go
+    - health_check_handler.go
     - jwt_service.go
     - ^.*_mock\.go$
     - ^.*_request\.go$

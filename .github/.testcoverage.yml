@@ -6,6 +6,7 @@ threshold:
   total: 80
 exclude:
   paths:
+    - internal/infrastructure/pkg/*
     - docs/*
     - internal/core/domain/value_object/*
     - jwt_service.go

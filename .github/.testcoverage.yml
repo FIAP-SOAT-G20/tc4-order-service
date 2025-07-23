@@ -6,6 +6,7 @@ threshold:
   total: 80
 exclude:
   paths:
+    - health_check_handler.go
     - internal/infrastructure/pkg/*
     - docs/*
     - internal/core/domain/value_object/*

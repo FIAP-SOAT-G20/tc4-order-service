@@ -88,7 +88,7 @@ coverage: ## Run tests with coverage
 	@cat $(TEST_COVERAGE_FILE_NAME).tmp | grep -v "_mock.go" | grep -v "_request.go" | grep -v "_response.go" \
 	| grep -v "_gateway.go" | grep -v "_datasource.go" | grep -v "_presenter.go" | grep -v "middleware" \
 	| grep -v "config" | grep -v "route" | grep -v "util" | grep -v "database" \
-	| grep -v "server" | grep -v "logger" | grep -v "httpclient" > $(TEST_COVERAGE_FILE_NAME)
+	| grep -v "server" | grep -v "logger" | grep -v "httpclient" | grep -v "_entity.go" | grep -v "errors.go" | grep -v "_dto.go" > $(TEST_COVERAGE_FILE_NAME)
 	@rm $(TEST_COVERAGE_FILE_NAME).tmp
 	$(GOCMD) tool cover -html=$(TEST_COVERAGE_FILE_NAME)
 

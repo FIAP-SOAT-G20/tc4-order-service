@@ -28,7 +28,7 @@ jobs:
       - name: Display Go version
         run: go version
       - name: generate test coverage
-        run: go test -timeout 1m -race ./... -coverprofile=./cover.out -covermode=atomic -coverpkg=./...
+        run: go test -json -timeout 1m -race ./... -coverprofile=./cover.out -covermode=atomic -coverpkg=./...
       - name: check test coverage
         id: coverage
         uses: vladopajic/go-test-coverage@v2
@@ -57,7 +57,7 @@ jobs:
           message: |
             go-test-coverage report:
             ```
-            ${{ steps.coverage.outputs.report }}
+            ${{ fromJSON(steps.coverage.outputs.report) }}```
             ```
 
       - name: "finally check coverage"

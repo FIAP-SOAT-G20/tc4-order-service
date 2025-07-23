@@ -82,7 +82,7 @@ func (uc *orderUseCase) Update(ctx context.Context, i dto.UpdateOrderInput) (*en
 	statusHasChanged := order.Status != i.Status
 	if i.Status != "" && statusHasChanged {
 		if !valueobject.StatusCanTransitionTo(order.Status, i.Status) {
-			return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
+			return nil, domain.NewInvalidInputError(domain.ErrOrderInvalidStatusTransition)
 		}
 
 		if valueobject.StatusTransitionNeedsStaffID(i.Status) && i.StaffID == 0 {

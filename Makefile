@@ -46,14 +46,14 @@ run-db: ## Run the database
 	@echo  "🟢 Running the database..."
 	docker-compose up -d db dbadmin
 
-.PHONY: run
-run: build run-db ## Run the application
+.PHONY: run-api
+run-api: build run-db ## Run the API application
 	@echo  "🟢 Running the application..."
 	$(GORUN) $(MAIN_FILE) || true
 
 
 .PHONY: run-worker
-run-worker: build run-db ## Run the application
+run-worker: build run-db ## Run the worker application 
 	@echo  "🟢 Running the application..."
 	$(GORUN) $(WORKER_FILE) || true
 
@@ -67,8 +67,8 @@ stop-db: ## Stop the database
 	@echo  "🔴 Stopping the database..."
 	docker-compose down db dbadmin
 
-.PHONY: run-air
-run-air: build ## Run the application with Air
+.PHONY: run-api-air
+run-api-air: build ## Run the application with Air
 	@echo  "🟢 Running the application with Air..."
 	@go tool air -c air.toml
 
@@ -78,17 +78,17 @@ test: lint ## Run tests
 	@$(GOFMT) ./...
 	@$(GOVET) ./...
 	@$(GOTIDY)
-	$(GOTEST) $(TEST_PATH) -race -v
+	$(GOTEST) $(TEST_PATH) -race -cover
 
 .PHONY: coverage
 coverage: ## Run tests with coverage
 	@echo  "🟢 Running tests with coverage..."
 # remove files that are not meant to be tested
-	$(GOTEST) $(TEST_PATH) -coverprofile=$(TEST_COVERAGE_FILE_NAME).tmp
+	$(GOTEST) $(TEST_PATH) -race -cover -coverprofile=$(TEST_COVERAGE_FILE_NAME).tmp
 	@cat $(TEST_COVERAGE_FILE_NAME).tmp | grep -v "_mock.go" | grep -v "_request.go" | grep -v "_response.go" \
 	| grep -v "_gateway.go" | grep -v "_datasource.go" | grep -v "_presenter.go" | grep -v "middleware" \
 	| grep -v "config" | grep -v "route" | grep -v "util" | grep -v "database" \
-	| grep -v "server" | grep -v "logger" | grep -v "httpclient" > $(TEST_COVERAGE_FILE_NAME)
+	| grep -v "server" | grep -v "logger" | grep -v "httpclient" | grep -v "_entity.go" | grep -v "errors.go" | grep -v "_dto.go" > $(TEST_COVERAGE_FILE_NAME)
 	@rm $(TEST_COVERAGE_FILE_NAME).tmp
 	$(GOCMD) tool cover -html=$(TEST_COVERAGE_FILE_NAME)
 

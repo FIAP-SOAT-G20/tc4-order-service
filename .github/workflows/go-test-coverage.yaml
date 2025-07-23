@@ -1,0 +1,72 @@
+name: ci/coverage
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  push:
+    branches:
+      - 'main'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  go-test-coverage:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version:
+          - "1.24"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "Setup Go ${{ matrix.go-version }}"
+        uses: actions/setup-go@v3
+        with:
+          go-version: "${{ matrix.go-version }}"
+          cache: true
+
+      - name: Display Go version
+        run: go version
+
+      - name: generate test coverage
+        run: go test -json -timeout 1m -race ./... -coverprofile=./cover.out -covermode=atomic -coverpkg=./...
+      
+      - name: check test coverage
+        id: coverage
+        uses: vladopajic/go-test-coverage@v2
+        continue-on-error: true # Should fail after coverage comment is posted
+        with:
+          config: ./.github/.testcoverage.yml
+          # git-token: ${{ github.ref_name == 'main' && secrets.GITHUB_TOKEN || '' }}
+          # git-branch: badges
+
+      # Post coverage report as comment (in 2 steps)
+      - name: find pull request ID
+        run: |
+          if [ -z "${{ github.event.pull_request }}" ]; then
+            echo "pull_request_id=0" >> $GITHUB_ENV
+          else
+            echo "pull_request_id=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+          fi
+
+      - name: post coverage report
+        if: env.pull_request_id
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-tag: coverage-report
+          pr-number: ${{ env.pull_request_id }}
+          message: |
+            Coverage report:
+            ```
+            ${{ fromJSON(steps.coverage.outputs.report) }}```
+            ```
+            
+
+      - name: "finally check coverage"
+        if: steps.coverage.outcome == 'failure'
+        shell: bash
+        run: echo "coverage check failed" && exit 1

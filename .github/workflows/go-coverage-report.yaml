@@ -1,4 +1,4 @@
-name: CI
+name: ci/go-coverage-report
 
 # This setup assumes that you run the unit tests with code coverage in the same
 # workflow that will also print the coverage report as comment to the pull request. 
@@ -44,12 +44,12 @@ jobs:
           path: coverage.txt # Make sure to use the same file name you chose for the "-coverprofile" in the "Test" step
       - name: Remove files that are not meant to be tested
         run: |
-          cat coverage.txt | grep -v "_mock.go" | grep -v "_request.go" | grep -v "_response.go" \
+          cp coverage.txt coverage.txt.tmp
+          cat coverage.txt.tmp | grep -v "_mock.go" | grep -v "_request.go" | grep -v "_response.go" \
           | grep -v "_gateway.go" | grep -v "_datasource.go" | grep -v "_presenter.go" | grep -v "middleware" \
           | grep -v "config" | grep -v "route" | grep -v "util" | grep -v "database" \
           | grep -v "server" | grep -v "logger" | grep -v "httpclient" | grep -v "_entity.go" | grep -v "errors.go" | grep -v "_dto.go" > coverage.txt
           rm coverage.txt.tmp
-          go tool cover -html=coverage.txt
 
   code_coverage:
     name: "Code coverage report"

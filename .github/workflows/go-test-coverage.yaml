@@ -11,13 +11,22 @@ permissions:
   contents: write
   pull-requests: write
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
+  build:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        go-version:
+          - "1.24"
 
     steps:
+      - uses: actions/checkout@v3
+      - name: "Setup Go ${{ matrix.go-version }}"
+        uses: actions/setup-go@v3
+        with:
+          go-version: "${{ matrix.go-version }}"
+          cache: true
+      - name: Display Go version
+        run: go version
       - name: check test coverage
         id: coverage
         uses: vladopajic/go-test-coverage@v2
@@ -43,7 +52,7 @@ jobs:
           message: |
             go-test-coverage report:
             ```
-            ${{ steps.coverage.outputs.report }}
+            ${{ fromJSON(steps.coverage.outputs.report) }}
             ```
 
       - name: "finally check coverage"

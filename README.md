@@ -312,13 +312,21 @@ make compose-up
 
 ## :white_check_mark: Tests
 
+### Unit Tests
+
 ```sh
-make test
+make tests
 ```
 
 > [!NOTE]
 > It will run the unit tests and generate the coverage report as `coverage.out`  
-> You can check the coverage report by running `make coverage`  
+> You can check the coverage report by running `make coverage` 
+
+### BDD Tests
+
+```sh
+make bdd-tests
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

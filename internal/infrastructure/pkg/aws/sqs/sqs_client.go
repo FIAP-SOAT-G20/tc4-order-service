@@ -22,8 +22,8 @@ func NewSqsClient(ctx context.Context) (*SqsClient, error) {
 	cfg, err := config.LoadDefaultConfig(ctx, config.WithCredentialsProvider(
 		credentials.StaticCredentialsProvider{
 			Value: aws.Credentials{
-				AccessKeyID:     os.Getenv("AWS_ACCESS_KEY"),
-				SecretAccessKey: os.Getenv("AWS_SECRET_KEY"),
+				AccessKeyID:     os.Getenv("AWS_ACCESS_KEY_ID"),
+				SecretAccessKey: os.Getenv("AWS_SECRET_ACCESS_KEY"),
 				SessionToken:    os.Getenv("AWS_SESSION_TOKEN"),
 			},
 		},

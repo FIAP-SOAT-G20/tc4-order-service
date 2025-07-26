@@ -143,7 +143,7 @@ This project is part of a larger system that includes:
 - [x] Dockerfile: small image with multi-stage docker build, and multi-platform build (Cross-Compilation)
 - [x] Makefile: to simplify the build and run commands
 - [x] Clean architecture
-- [x] PostgreSQL database
+- [x] BDD (Gherkin/Godog)
 - [x] Conventional commits
 
 <details>
@@ -198,6 +198,8 @@ This project is part of a larger system that includes:
 - [Swagger](https://swagger.io/)
 - [Make](https://www.gnu.org/software/make/)
 - [Testify](https://github.com/stretchr/testify)
+- [Godog](https://github.com/cucumber/godog)
+- [Testcontainers](https://github.com/testcontainers/testcontainers-go)
 
 </details>
 
@@ -327,6 +329,7 @@ make test
 - [AWS SDK Code Examples](https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/gov2/sqs/hello/hello.go)
 - [Process AWS SQS Message With Goroutines](https://medium.com/@wiraizkandar/process-aws-sqs-message-with-goroutines-98ff4799ea69)
 - [Amazon SQS examples using SDK for Go V2](https://docs.aws.amazon.com/code-library/latest/ug/go_2_sqs_code_examples.html)
+- [Go with Cucumber: An Introduction for BDD Style Integration Testing](https://medium.com/tiket-com/go-with-cucumber-an-introduction-for-bdd-style-integration-testing-7aca2f2879e4)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

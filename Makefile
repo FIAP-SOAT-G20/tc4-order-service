@@ -243,3 +243,9 @@ new-branch: ## Create new branch
 pull-request: ## Create pull request
 	@echo "🟢 Creating pull request..."
 	./scripts/pull-request.sh
+
+.PHONY: bdd-tests
+bdd-tests: ## Run BDD tests
+	@echo "🟢 Running BDD tests..."
+	go test -test.v -test.run ^TestFeatures$$ ./tests
+

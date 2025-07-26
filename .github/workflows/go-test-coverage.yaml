@@ -40,27 +40,85 @@ jobs:
           # git-token: ${{ github.ref_name == 'main' && secrets.GITHUB_TOKEN || '' }}
           # git-branch: badges
 
-      # Post coverage report as comment (in 2 steps)
-      - name: find pull request ID
-        run: |
-          if [ -z "${{ github.event.pull_request }}" ]; then
-            echo "pull_request_id=0" >> $GITHUB_ENV
-          else
-            echo "pull_request_id=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
-          fi
+      - name: 📊 Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-reports
+          path: |
+            cover.out
+            coverage.out
+            .github/.testcoverage.yml
+          retention-days: 7
 
-      - name: post coverage report
-        if: env.pull_request_id
+      # Generate enhanced coverage report
+      - name: 📋 Generate coverage summary
+        if: always()
+        id: coverage-summary
+        run: |
+          # Determine coverage status based on coverage check step outcome
+          if [ "${{ steps.coverage.outcome }}" = "success" ]; then
+            COVERAGE_STATUS="✅ PASSED"
+            STATUS_ICON="✅"
+            COVERAGE_RESULT="Coverage requirements met"
+          else
+            COVERAGE_STATUS="❌ FAILED"
+            STATUS_ICON="❌"
+            COVERAGE_RESULT="Coverage requirements not met"
+          fi
+          
+          # Extract coverage percentage from report if available
+          COVERAGE_REPORT="${{ fromJSON(steps.coverage.outputs.report) }}"
+          
+          # Create enhanced coverage summary
+          cat > coverage_summary.md << EOF
+          ## 📊 Test Coverage Report
+          
+          **Status:** $COVERAGE_STATUS  
+          **Result:** $COVERAGE_RESULT
+          
+          ### 🎯 Coverage Details:
+          \`\`\`
+          $COVERAGE_REPORT
+          \`\`\`
+          
+          ### � Coverage Requirements:
+          - **Minimum Threshold:** 80%
+          - **Coverage Profile:** ./cover.out
+          - **Coverage Mode:** atomic
+          
+          ### 🔧 Test Configuration:
+          - **Go Version:** ${{ matrix.go-version }}
+          - **Race Detection:** ✅ enabled
+          - **Timeout:** 1 minute
+          - **Test Packages:** All packages (./...)
+          
+          ### � Excluded from Coverage:
+          - Mock files (\`*_mock.go\`)
+          - Request/Response DTOs (\`*_request.go\`, \`*_response.go\`)
+          - Infrastructure adapters (\`*_gateway.go\`, \`*_datasource.go\`, \`*_presenter.go\`)
+          - Documentation and configuration files
+          - Value objects and domain entities
+          
+          ---
+          _Automated test coverage ensures code quality and identifies untested business logic._
+          EOF
+          
+          # Also add to step summary
+          cat coverage_summary.md >> $GITHUB_STEP_SUMMARY
+          
+          # Set output for PR comment
+          echo "SUMMARY_CONTENT<<EOF" >> $GITHUB_OUTPUT
+          cat coverage_summary.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 💬 Comment coverage report on PR
+        if: always() && github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-tag: coverage-report
-          pr-number: ${{ env.pull_request_id }}
-          message: |
-            Coverage report:
-            ```
-            ${{ fromJSON(steps.coverage.outputs.report) }}```
-            ```
+          message: ${{ steps.coverage-summary.outputs.SUMMARY_CONTENT }}
             
 
       - name: "finally check coverage"

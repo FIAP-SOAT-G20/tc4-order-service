@@ -23,4 +23,4 @@ jobs:
       run: cp .env.example .env
 
     - name: ✅ Run tests
-      run: make test
+      run: make tests

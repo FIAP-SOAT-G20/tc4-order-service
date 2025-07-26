@@ -29,4 +29,5 @@ exclude:
     - ^.*_entity\.go$
     - ^.*errors\.go$
     - ^.*_dto\.go$
+    - tests/*
 

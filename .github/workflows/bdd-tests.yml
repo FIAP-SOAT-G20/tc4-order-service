@@ -11,8 +11,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  bdd-tests:
-    name: BDD Tests (Gherkin/Godog)
+  godog:
     runs-on: ubuntu-latest
     
     steps:

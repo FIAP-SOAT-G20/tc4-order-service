@@ -3,9 +3,11 @@ package sqs
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
 	"github.com/aws/aws-sdk-go-v2/service/sqs/types"
 )
@@ -16,8 +18,16 @@ type SqsClient struct {
 
 // NewSqsClient creates a new SQS client with AWS SDK v2
 func NewSqsClient(ctx context.Context) (*SqsClient, error) {
-	// Load AWS configuration
-	cfg, err := config.LoadDefaultConfig(ctx)
+	// Load AWS configuration with credentials
+	cfg, err := config.LoadDefaultConfig(ctx, config.WithCredentialsProvider(
+		credentials.StaticCredentialsProvider{
+			Value: aws.Credentials{
+				AccessKeyID:     os.Getenv("AWS_ACCESS_KEY"),
+				SecretAccessKey: os.Getenv("AWS_SECRET_KEY"),
+				SessionToken:    os.Getenv("AWS_SESSION_TOKEN"),
+			},
+		},
+	))
 	if err != nil {
 		return nil, fmt.Errorf("unable to load SDK config: %w", err)
 	}

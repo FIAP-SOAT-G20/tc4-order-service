@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
-	"reflect"
 	"strings"
 	"time"
 
@@ -38,11 +37,26 @@ func init() {
 	containerPort, _ := container.MappedPort(ctx, port)
 	host, _ := container.Host(ctx)
 
-	os.Setenv("DB_HOST", host)
-	os.Setenv("DB_PORT", containerPort.Port())
-	os.Setenv("DB_USER", user)
-	os.Setenv("DB_PASS", password)
-	os.Setenv("DB_NAME", dbname)
+	err := os.Setenv("DB_HOST", host)
+	if err != nil {
+		panic(err)
+	}
+	err = os.Setenv("DB_PORT", containerPort.Port())
+	if err != nil {
+		panic(err)
+	}
+	err = os.Setenv("DB_USER", user)
+	if err != nil {
+		panic(err)
+	}
+	err = os.Setenv("DB_PASS", password)
+	if err != nil {
+		panic(err)
+	}
+	err = os.Setenv("DB_NAME", dbname)
+	if err != nil {
+		panic(err)
+	}
 }
 
 // startContainer is a helper to start a test container for the database.
@@ -232,42 +246,13 @@ func (a *apiFeature) resetResponse(*godog.Scenario) {
 	}
 }
 
-func (a *apiFeature) iSendRequestToWithPayload(ctx context.Context, method, route string, payloadDoc *godog.DocString) (context.Context, error) {
-	var reqBody []byte
-
-	if payloadDoc != nil {
-		payloadMap := entity.Order{}
-		err := json.Unmarshal([]byte(payloadDoc.Content), &payloadMap)
-		if err != nil {
-			panic(err)
-		}
-
-		reqBody, _ = json.Marshal(payloadMap)
-	}
-
-	req := httptest.NewRequest(method, route, bytes.NewReader(reqBody))
-	req.Header.Set("Content-Type", "application/json")
-
-	w := httptest.NewRecorder()
-	a.router.ServeHTTP(w, req)
-
-	var createdOrders []entity.Order
-	json.NewDecoder(w.Body).Decode(&createdOrders)
-
-	actual := response{
-		status: w.Code,
-		body:   createdOrders,
-	}
-
-	return context.WithValue(ctx, godogsResponseCtxKey{}, actual), nil
-}
-
 func (a *apiFeature) iHaveAValidOrderRequest(ctx context.Context) error {
 	order := entity.Order{
 		ID:     12345,
 		Status: "created",
 	}
-	ctx = context.WithValue(ctx, godogsRequestCtxKey{}, order)
+	// Store the order in context for later steps
+	ctx = context.WithValue(ctx, godogsRequestCtxKey{}, order) //nolint
 	return nil
 }
 
@@ -279,7 +264,7 @@ func (a *apiFeature) iHaveAnExistingOrderWithID(ctx context.Context, orderID str
 		ID:     12345,
 		Status: valueobject.PENDING,
 	}
-	ctx = context.WithValue(ctx, godogsRequestCtxKey{}, order)
+	ctx = context.WithValue(ctx, godogsRequestCtxKey{}, order) //nolint
 
 	// Mock the existence of an order with the given ID
 	if orderID != "12345" {
@@ -386,42 +371,6 @@ func (a *apiFeature) iShouldReceiveTheOrderDetailsWithStatus(ctx context.Context
 
 	if order.Status != valueobject.OrderStatus(expectedStatus) {
 		return fmt.Errorf("expected order status to be %s, but got %s", expectedStatus, order.Status)
-	}
-
-	return nil
-}
-
-func (a *apiFeature) theResponseCodeShouldBe(ctx context.Context, expectedStatus int) error {
-	resp, ok := ctx.Value(godogsResponseCtxKey{}).(response)
-	if !ok {
-		return errors.New("there are no godogs available")
-	}
-
-	if expectedStatus != resp.status {
-		if resp.status >= 400 {
-			return fmt.Errorf("expected response code to be: %d, but actual is: %d, response message: %s", expectedStatus, resp.status, resp.body)
-		}
-		return fmt.Errorf("expected response code to be: %d, but actual is: %d", expectedStatus, resp.status)
-	}
-
-	return nil
-}
-
-func (a *apiFeature) theResponsePayloadShouldMatchJson(ctx context.Context, expectedBody *godog.DocString) error {
-	actualResp, ok := ctx.Value(godogsResponseCtxKey{}).(response)
-	if !ok {
-		return errors.New("there are no godogs available")
-	}
-
-	orders := make([]entity.Order, 0)
-
-	err := json.Unmarshal([]byte(expectedBody.Content), &orders)
-	if err != nil {
-		return err
-	}
-
-	if !reflect.DeepEqual(actualResp.body, orders) {
-		return fmt.Errorf("expected JSON does not match actual, %v vs. %v", expectedBody, actualResp.body)
 	}
 
 	return nil

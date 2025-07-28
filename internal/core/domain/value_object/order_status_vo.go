@@ -69,7 +69,7 @@ func ToOrderStatus(status string) (OrderStatus, bool) {
 
 // OrderStatusTransitions defines the allowed transitions between OrderStatuses
 var OrderStatusTransitions = map[OrderStatus][]OrderStatus{
-	OPEN:      {CANCELLED, PENDING},
+	OPEN:      {CANCELLED, PENDING, RECEIVED},
 	CANCELLED: {},
 	PENDING:   {OPEN, RECEIVED, CANCELLED},
 	RECEIVED:  {PREPARING, CANCELLED},
